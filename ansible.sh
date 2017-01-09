@@ -1,5 +1,5 @@
 #!/bin/bash 
-while getopts s:c:k:t: option
+while getopts s:c:k:t:h: option
 do
         case "${option}" in
                 s) AZURE_SUBSCRIPTION_ID=${OPTARG};;
