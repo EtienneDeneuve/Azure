@@ -1,8 +1,7 @@
 #!/bin/bash 
 while getopts s:c:k:t: option
 do
-        case "${option}"
-        in
+        case "${option}" in
                 s) AZURE_SUBSCRIPTION_ID=${OPTARG};;
                 c) AZURE_CLIENT_ID=${OPTARG};;
                 k) AZURE_SECRET=${OPTARG};;
