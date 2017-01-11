@@ -26,3 +26,32 @@ usage :
 ```
 ## Backup Folder
 In this folder you will get some sample for Azure Automation using Powershell
+
+- Get-cAzureSubscription Function :
+```Powershell
+PS C:\WINDOWS\system32> Get-cAzureSubscription
+Azure connected successfully
+Select the subscription for the azure backup deployement
+Subscription 1 :
+
+         Subscription Name
+         XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+         XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+
+
+Subscription 2 :
+
+         Subscription Name
+         XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+         XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+
+
+What is the Id of the subscription?
+
+1
+Here is the Subscription choosed :
+
+         Subscription Name
+         XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+         XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+```
