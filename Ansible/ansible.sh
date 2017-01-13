@@ -18,7 +18,7 @@ done
     ANSIBLE_HOST_FILE=/etc/ansible/hosts
     ANSIBLE_CONFIG_FILE=/etc/ansible/ansible.cfg
     ANSIBLE_MODULE_DIR=/opt/azure
-    ANSIBLE_USER_DIR=/root/.azure/
+    ANSIBLE_USER_CRED_FILE=/root/.azure/credentials
     
 # installation de ansible et modules pip 
     echo "Update packages list"
@@ -81,7 +81,7 @@ subscription_id=%s
 client_id=%s
 secret=%s
 tenant=%s
-' ${AZURE_SUBSCRIPTION_ID} ${AZURE_CLIENT_ID} ${AZURE_SECRET} ${AZURE_TENANT} > ${ANSIBLE_USER_DIR}/.azure/credentials
+' ${AZURE_SUBSCRIPTION_ID} ${AZURE_CLIENT_ID} ${AZURE_SECRET} ${AZURE_TENANT} > ${ANSIBLE_USER_CRED_FILE}
 
 #creation du playbook de test
     echo "Create the test of the inventory for azure "
