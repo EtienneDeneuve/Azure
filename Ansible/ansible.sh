@@ -26,7 +26,7 @@ done
     echo "Install of libssl-dev"
     apt-get install libssl-dev --yes --force-yes
     echo "Adding Ansible Repo"
-    apt-add-repository ppa:ansible/ansible
+    apt-add-repository ppa:ansible/ansible -y -u
     echo "apt-get update"
     apt-get --yes --force-yes update
     echo "Install of ansible"
