@@ -110,3 +110,44 @@ function Get-cPowershellVersion {
     }    
 }
 
+<#
+    Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.RecoveryServices"
+    New-AzureRmResourceGroup –Name "test-rg" –Location "West US" 
+    New-AzureRmRecoveryServicesVault -Name "testvault" -ResourceGroupName " test-rg" -Location "West US"
+    $vault1 = Get-AzureRmRecoveryServicesVault –Name "testVault"
+        Set-AzureRmRecoveryServicesBackupProperties  -vault $vault1 -BackupStorageRedundancy GeoRedundant
+    Get-AzureRmRecoveryServicesVault
+    Set-OBSchedule -Policy $newpolicy -Schedule $sched
+
+    http://aka.ms/azurebackup_agent
+
+    /q 
+        Installation silencieuse
+    -
+    /p:"emplacement"
+        Chemin d’accès du dossier d’installation de l’agent de Sauvegarde Azure.
+        C:\Program Files\Microsoft Azure Recovery Services Agent
+        /s:"emplacement"
+        Chemin d’accès du dossier de cache de l’agent de Sauvegarde Azure.
+        C:\Program Files\Microsoft Azure Recovery Services Agent\Scratch
+    /m
+        Abonnement à Microsoft Update
+        -
+    /nu
+        Ne pas vérifier les mises à jour une fois l’installation terminée
+        -
+    /d
+        Désinstalle l’agent Microsoft Azure Recovery Services
+        -
+    /ph
+        Adresse de l’hôte proxy
+        -
+    /po
+        Numéro de port de l’hôte proxy
+        -
+    /pu
+        Nom d’utilisateur de l’hôte proxy
+        -
+    /pw
+        Mot de passe du proxy
+#>

@@ -66,6 +66,7 @@ done
     cd ${ANSIBLE_MODULE_DIR}/inventory
     wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/azure_rm.py
     wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/azure_rm.ini
+    chmod +x ${ANSIBLE_MODULE_DIR}/inventory/azure_rm.py
 
 #creation du credentials file
     echo "Create the Credential file for Azure"
