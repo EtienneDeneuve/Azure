@@ -12,7 +12,7 @@ done
 # create folder 
     mkdir -p /opt/azure/playbook 
     mkdir -p /opt/azure/inventory
-    mkdir ~/.azure
+    mkdir -p ~/.azure
 
 # variables 
     ANSIBLE_HOST_FILE=/etc/ansible/hosts
