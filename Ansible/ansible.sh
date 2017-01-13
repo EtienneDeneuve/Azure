@@ -21,48 +21,50 @@ done
     ANSIBLE_USER_DIR=~/.azure/
     
 # installation de ansible et modules pip 
-    echo -e "Install of \e[33msoftware-properties-common"
+    echo "Install of software-properties-common"
     apt-get --yes --force-yes install software-properties-common
-    echo -e "Install of \e[33mlibssl-dev"
+    echo "Install of libssl-dev"
     apt-get install libssl-dev --yes --force-yes
-    echo -e "Adding \e[33mAnsible Repo"
+    echo "Adding Ansible Repo"
     apt-add-repository ppa:ansible/ansible
-    echo -e "\e[33mapt-get update"
+    echo "apt-get update"
     apt-get --yes --force-yes update
-    echo -e "Install of \e[33mansible"
+    echo "Install of ansible"
     apt-get --yes --force-yes install ansible
     # install sshpass
-    echo -e "Install of \e[33msshpass"
+    echo "Install of sshpass"
     apt-get --yes --force-yes install sshpass
     # install Git
-    echo -e "Install of \e[33mgit"
+    echo "Install of git"
     apt-get --yes --force-yes install git
     # install python
-    echo -e "Install of \e[33mpython-pip"
+    echo "Install of python-pip"
     apt-get --yes --force-yes install python-pip
-    echo -e "Upgrade via pip of \e[33murllib3 "
+    echo "Upgrade via pip of urllib3 "
     pip install urllib3 --upgrade
-    echo -e "Install via pip version 0.4.4 of \e[33mmsrest"
+    echo "Install via pip version 0.4.4 of msrest"
     pip install msrest==0.4.4 
-    echo -e "Install via pip version 0.4.4 of \e[33mmsrestazure"
+    echo "Install via pip version 0.4.4 of msrestazure"
     pip install msrestazure==0.4.4 
-    echo -e "Install via pip version 2.0.0rc5 \e[33mazure"
+    echo "Install via pip version 2.0.0rc5 azure"
     pip install azure==2.0.0rc5
 
 # configuration de ansible :
-    echo -e "Backup default config of  \e[33mAnsible"
+    echo "Backup default config of  Ansible"
     mv ${ANSIBLE_CONFIG_FILE} ${ANSIBLE_CONFIG_FILE}.backup
-    echo -e "Disable of \e[33mhost_key_checking"
-    printf  "[defaults]\nhost_key_checking = False\n\n" >> "${ANSIBLE_CONFIG_FILE}"
-    echo -e "Shorten the ControlPath to avoid errors with long host names , long user names or deeply nested home directories"
-    echo  $'[ssh_connection]\ncontrol_path = ~/.ssh/ansible-%%h-%%r' >> "${ANSIBLE_CONFIG_FILE}"
-    echo -e "Set the use of SCP if SSH"
+    echo "Disable of host_key_checking"
+    printf "[defaults]\nhost_key_checking = False\n\n" >> "${ANSIBLE_CONFIG_FILE}"
+    echo "Shorten the ControlPath to avoid errors with long host names , \
+            long user names or deeply nested home directories"
+        echo '[ssh_connection]\ncontrol_path = ~/.ssh/ansible-%%h-%%r' \
+            >> "${ANSIBLE_CONFIG_FILE}"
+    echo "Set the use of SCP if SSH"
     echo "\nscp_if_ssh=True" >> "${ANSIBLE_CONFIG_FILE}"
-    echo -e "Adding 127.0.0.1 in Ansible Host File"
+    echo "Adding 127.0.0.1 in Ansible Host File"
     echo "127.0.0.1" > ${ANSIBLE_HOST_FILE}
 
 #chargement des modules azure ansible depuis le git 
-    echo -e "Download the Azure Inventory Script from Ansible Git"
+    echo "Download the Azure Inventory Script from Ansible Git"
     cd ${ANSIBLE_MODULE_DIR}/inventory
     wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/azure_rm.py
     wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/azure_rm.ini
@@ -70,12 +72,12 @@ done
 
 #creation du credentials file
     echo "Create the Credential file for Azure"
-echo '[default]
-subscription_id=${AZURE_SUBSCRIPTION_ID}
-client_id=${AZURE_CLIENT_ID}
-secret=${AZURE_SECRET}
-tenant=${AZURE_TENANT}
-' > ~/.azure/credentials
+printf '[default]
+subscription_id=%s
+client_id=%s
+secret=%s
+tenant=%s
+' ${AZURE_SUBSCRIPTION_ID} ${AZURE_CLIENT_ID} ${AZURE_SECRET} ${AZURE_TENANT} > ~/.azure/credentials
 
 #creation du playbook de test
     echo "Create the test of the inventory for azure "
