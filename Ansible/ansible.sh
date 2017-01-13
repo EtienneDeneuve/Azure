@@ -12,34 +12,38 @@ done
 # create folder 
     mkdir -p /opt/azure/playbook 
     mkdir -p /opt/azure/inventory
-    mkdir -p ~/.azure
+    mkdir -p /root/.azure
 
 # variables 
     ANSIBLE_HOST_FILE=/etc/ansible/hosts
     ANSIBLE_CONFIG_FILE=/etc/ansible/ansible.cfg
     ANSIBLE_MODULE_DIR=/opt/azure
-    ANSIBLE_USER_DIR=~/.azure/
+    ANSIBLE_USER_DIR=/root/.azure/
     
 # installation de ansible et modules pip 
+    echo "Update packages list"
+    apt-get update -y
     echo "Install of software-properties-common"
-    apt-get --yes --force-yes install software-properties-common
+    apt-get -y install software-properties-common
     echo "Install of libssl-dev"
-    apt-get install libssl-dev --yes --force-yes
+    apt-get install libssl-dev -y 
     echo "Adding Ansible Repo"
     apt-add-repository ppa:ansible/ansible -y -u
     echo "apt-get update"
-    apt-get --yes --force-yes update
+    apt-get -y update
     echo "Install of ansible"
-    apt-get --yes --force-yes install ansible
+    apt-get -y install ansible
     # install sshpass
     echo "Install of sshpass"
-    apt-get --yes --force-yes install sshpass
+    apt-get -y install sshpass
     # install Git
     echo "Install of git"
-    apt-get --yes --force-yes install git
+    apt-get -y  install git
     # install python
     echo "Install of python-pip"
-    apt-get --yes --force-yes install python-pip
+    apt-get -y install python-pip
+    echo "upgrade pip over pir"
+    pip install --upgrade pip
     echo "Upgrade via pip of urllib3 "
     pip install urllib3 --upgrade
     echo "Install via pip version 0.4.4 of msrest"
