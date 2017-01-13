@@ -81,7 +81,7 @@ subscription_id=%s
 client_id=%s
 secret=%s
 tenant=%s
-' ${AZURE_SUBSCRIPTION_ID} ${AZURE_CLIENT_ID} ${AZURE_SECRET} ${AZURE_TENANT} > ~/.azure/credentials
+' ${AZURE_SUBSCRIPTION_ID} ${AZURE_CLIENT_ID} ${AZURE_SECRET} ${AZURE_TENANT} > ${ANSIBLE_USER_DIR}/.azure/credentials
 
 #creation du playbook de test
     echo "Create the test of the inventory for azure "
