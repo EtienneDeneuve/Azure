@@ -28,6 +28,7 @@ done
     echo "Install of libssl-dev"
     apt-get install libssl-dev -y 
     echo "Adding Ansible Repo"
+    #-y for assume yes and -u for update just after add
     apt-add-repository ppa:ansible/ansible -y -u
     echo "apt-get update"
     apt-get -y update
