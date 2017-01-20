@@ -25,7 +25,7 @@ usage :
   terraform apply TF-Ubuntu-16.04-LTS
 ```
 ## Backup Folder
-In this folder you will get some sample for Azure Automation using Powershell
+In this folder you will get some samples for Azure Automation using Powershell
 
 - Get-cAzureSubscription Function :
 ```Powershell
