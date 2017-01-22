@@ -6,7 +6,7 @@
 
 ## 1. Ansible
 Le dossier contiens des playbook [Ansible](https://www.ansible.com/) pour [Azure](https://azure.microsoft.com/fr-fr/) <br/>
-  > Si vous n'avez pas de compte sur Azure creer un compte gratuit [ici](https://azure.microsoft.com/fr-fr/free/)
+  > Si vous n'avez pas de compte sur Azure creer un compte gratuit [ici](https://azure.microsoft.com/fr-fr/free/) <br/>
 
 ### 1. ansible_playbook_azure_inventory.yml <br/>
   Ce playbook permet de verifier si le SDK Pyton Azure est bien configuré.
