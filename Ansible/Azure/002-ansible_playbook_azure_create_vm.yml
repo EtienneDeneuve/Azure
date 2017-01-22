@@ -7,40 +7,40 @@
   # D'abord on crée un Ressources Group'
   - name: Create Ansible Resourcegroup instances
     azure_rm_resourcegroup:
-      name: Ansible-RG
+      name: Ansible_RG
       force: true
       state: present
       location: westus
   # Ensuite on crée un compte de stockage
   - name: Create Ansible Storage Account instances
     azure_rm_storageaccount:
-      resource_group: Ansible-RG
+      resource_group: Ansible_RG
       name: ansiblesto01
       account_type: Standard_LRS
   # En suite on crée le Vnet
   - name: Create Ansible Virtual Network instances ...
     azure_rm_virtualnetwork:
-      resource_group: Ansible-RG
-      name: ansible-vnet-01
+      resource_group: Ansible_RG
+      name: ansible_vnet_01
       address_prefixes: "10.10.0.0/16"
   # En suite on crée les subnets
   - name: Create Ansible Subnet instances ...
     azure_rm_subnet:
-      resource_group: Ansible-RG
-      name: ansible-subnet-01
+      resource_group: Ansible_RG
+      name: ansible_subnet_01
       address_prefix: "10.10.0.0/24"
-      virtual_network: ansible-vnet-01
+      virtual_network: ansible_vnet_01
   # En suite on provisionne un ip Public
   - name: Create Public IP 01
     azure_rm_publicipaddress:
-      resource_group: Ansible-RG
+      resource_group: Ansible_RG
       allocation_method: Static 
-      name: ansible-pip-01
+      name: ansible_pip_01
   # Creation d'un NSG pour le SSH
   - name: Create NSG with SSH Enabled
     azure_rm_securitygroup:
-      resource_group: Ansible-RG
-      name: ansible-nsc-01
+      resource_group: Ansible_RG
+      name: ansible_nsc_01
       rules:
         - name: SSH
           protocol: Tcp
@@ -51,29 +51,33 @@
   # Utilisation des objets deja creer pour cree une NIC
   - name: Create NIC with other Parameters (PIP,VNET,SUBNET...)...
     azure_rm_networkinterface:
-      resource_group: Ansible-RG
-      name: ansible-nic-01
-      virtual_network: ansible-vnet-01
-      subnet: ansible-subnet-01
-      public_ip_name: ansible-pip-01
-      security_group: ansible-nsc-01
+      resource_group: Ansible_RG
+      name: ansible_nic_01
+      virtual_network: ansible_vnet_01
+      subnet: ansible_subnet_01
+      public_ip_name: ansible_pip_01
+      security_group: ansible_nsc_01
   # Et on cree la VM
   - name: Launch instances
     azure_rm_virtualmachine:
-      resource_group: Ansible-RG
-      name: ansible-vm-01
+      resource_group: Ansible_RG
+      name: ansible_vm_01
       vm_size: Standard_A0
       os_type: Linux
       storage_account: ansiblesto01
-      storage_container: ansible-vm-01
+      storage_container: ansible_vm_01
       storage_blob: os-vm-01.vhd
       admin_username: testadmin
       admin_password: Password1234!
-      network_interfaces: ansible-nic-01
+      network_interfaces: ansible_nic_01
       image:
         offer: UbuntuServer
         publisher: Canonical
         sku: '16.04-LTS'
         version: latest
-  - debug: msg="{{ ansible-pip-01 }} has powerstate {{ powerstate }}"      
+  - name: Get facts for one Public IP
+    azure_rm_publicip_facts:
+      resource_group: Ansible_RG
+      name: ansible_pip_01
+  - debug: msg="{{ ansible_pip_01 }} has powerstate"      
 ...
