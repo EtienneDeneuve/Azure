@@ -63,7 +63,7 @@ Here is the Subscription choosed :
 ## 3. Terraform Folder
 
 ### 1. IaaS 
-> Le dossier contient des fichiers terraform pour Azure en mode quick & dirty, ils sont pas recommandé en production sans les rendre secure ! <br/>
+> *Le dossier contient des fichiers terraform pour Azure en mode quick & dirty, je vous recommande de ne pas les utiliser tels quels en production sans les rendre secure !* <br/>
 
 #### 1. TF-Ubuntu-16.04-LTS
 Deploie une machine Ubuntu 16.04 LTS dans un Ressource Group avec :
@@ -106,6 +106,7 @@ Le dossier Ansible contient un fichier Terraform pour créer une machine virtuel
 >SETTINGS
 >```
 
+#### 3. Note
 + Le script ansible.sh est utilisable séparément.
 Utilisation : 
 ```bash
