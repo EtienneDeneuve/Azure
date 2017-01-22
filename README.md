@@ -108,6 +108,7 @@ Le dossier Ansible contient un fichier Terraform pour créer une machine virtuel
 
 #### 3. Note
 + Le script ansible.sh est utilisable séparément.
+
 Utilisation : 
 ```bash
   cd /tmp/ 
