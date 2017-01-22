@@ -57,7 +57,7 @@
       subnet: ansible-subnet-01
       public_ip_name: ansible-pip-01
       security_group: ansible-nsc-01
-  # Et on creer la VM
+  # Et on cree la VM
   - name: Launch instances
     azure_rm_virtualmachine:
       resource_group: Ansible-RG
@@ -71,8 +71,9 @@
       admin_password: Password1234!
       network_interfaces: ansible-nic-01
       image:
-        offer: CentOS
-        publisher: OpenLogic
-        sku: '7.1'
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: '16.04-LTS'
         version: latest
+  - debug: msg="{{ ansible-pip-01 }} has powerstate {{ powerstate }}"      
 ...
