@@ -159,7 +159,7 @@ resource "azurerm_virtual_machine_extension" "Ansible-Install" {
 
   settings = <<SETTINGS
 {
-    "fileUris": ["https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/Ansible/ansible.sh"],
+    "fileUris": ["https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/02%20-%20Ansible/ansible.sh"],
     "commandToExecute": "sh ansible.sh -s <subscription_id> -c <client_id> -k <secret> -t <tenant_id>",
     "timestamp": "19"
 }

@@ -9,7 +9,7 @@ Le dossier contiens des playbook [Ansible](https://www.ansible.com/) pour [Azure
   > Si vous n'avez pas de compte sur Azure creer un compte gratuit [ici](https://azure.microsoft.com/fr-fr/free/)
 ### 1. ansible_playbook_azure_inventory.yml <br/>
   Ce playbook permet de verifier si le SDK Pyton Azure est bien configuré.
-  >Il faut telecharger les fichier "azure_rm.py" et "azure_rm.ini" depuis le repo git de [Ansible](https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/) ou utiliser mon script d'instalation [ici](https://github.com/EtienneDeneuve/Azure/blob/master/Terraform/Ansible/ansible.sh)
+  >Il faut telecharger les fichier "azure_rm.py" et "azure_rm.ini" depuis le repo git de [Ansible](https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/) ou utiliser mon script d'instalation [ici](https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/02%20-%20Ansible/ansible.sh)
   
 Syntaxe :
 ```bash  
@@ -96,7 +96,7 @@ Le dossier Ansible contient un fichier Terraform pour créer une machine virtuel
 >```terraform
 >  settings = <<SETTINGS
 >{
->    "fileUris": ["https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/Ansible/ansible.sh"],
+>    "fileUris": ["https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/02%20-%20Ansible/ansible.sh"],
 >    "commandToExecute": "sh ansible.sh -s <subscription_id> -c <client_id> -k <secret> -t <tenant_id>",
 >    "timestamp": "19"
 >}
@@ -107,7 +107,7 @@ Le dossier Ansible contient un fichier Terraform pour créer une machine virtuel
 Utilisation : 
 ```bash
   cd /tmp/ 
-  wget https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/ansible.sh
+  wget https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/02%20-%20Ansible/ansible.sh
   chmod +x ansible.sh
   ./ansible -s YOUR-SUBSCRIPTION-XXXX-XXXX-XXXX \ 
     -c CLIENT-ID-VIA-SERVICE-PRINCIPAL \ 
