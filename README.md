@@ -7,8 +7,10 @@
 ## 1. Ansible
 Le dossier contiens des playbook [Ansible](https://www.ansible.com/) pour [Azure](https://azure.microsoft.com/fr-fr/) <br/>
   > Si vous n'avez pas de compte sur Azure creer un compte gratuit [ici](https://azure.microsoft.com/fr-fr/free/)
+
 ### 1. ansible_playbook_azure_inventory.yml <br/>
   Ce playbook permet de verifier si le SDK Pyton Azure est bien configuré.
+  
   >Il faut telecharger les fichier "azure_rm.py" et "azure_rm.ini" depuis le repo git de [Ansible](https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/) ou utiliser mon script d'instalation [ici](https://raw.githubusercontent.com/EtienneDeneuve/Azure/master/Terraform/02%20-%20Ansible/ansible.sh)
   
 Syntaxe :
@@ -17,7 +19,8 @@ Syntaxe :
 ```
 ###  2. ansible_playbook_azure_create_vm.yml <br/>
   > Dans le playbook vous devez indiquer une machine avec les modules Azure a la ligne "hosts" et qui doit etre presente dans /etc/ansible/hosts
-  Ce playbook cree une machine virtuelle dans Azure.
+
+Ce playbook cree une machine virtuelle dans Azure.
 Syntaxe :
 ```bash  
   ansible-playbook ansible_playbook_azure_create_vm.yml --syntax-check
