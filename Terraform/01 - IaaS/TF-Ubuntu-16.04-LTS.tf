@@ -1,8 +1,8 @@
 provider "azurerm" {
-    subscription_id =     "..."
-    client_id       =     "..."
-    client_secret   =     "..."
-    tenant_id       =     "..."
+  subscription_id = "..."
+  client_id       = "..."
+  client_secret   = "..."
+  tenant_id       = "..."
 }
 
 resource "azurerm_resource_group" "terraform-ansible" {
@@ -15,46 +15,44 @@ resource "azurerm_virtual_network" "terraform-vnet2" {
   address_space       = ["10.0.0.0/16"]
   location            = "West US"
   resource_group_name = "${azurerm_resource_group.terraform-ansible.name}"
-  
 }
 
 resource "azurerm_subnet" "terraform-subnet" {
-  name                 = "terraform-subnet2"
-  resource_group_name  = "${azurerm_resource_group.terraform-ansible.name}"
-  virtual_network_name = "${azurerm_virtual_network.terraform-vnet2.name}"
-  address_prefix       = "10.0.2.0/24"
+  name                      = "terraform-subnet2"
+  resource_group_name       = "${azurerm_resource_group.terraform-ansible.name}"
+  virtual_network_name      = "${azurerm_virtual_network.terraform-vnet2.name}"
+  address_prefix            = "10.0.2.0/24"
   network_security_group_id = "${azurerm_network_security_group.terraform-nsg2.id}"
 }
 
 resource "azurerm_public_ip" "terraform-pip2" {
-   name = "acceptanceTestPublicIp1"
-   resource_group_name = "${azurerm_resource_group.terraform-ansible.name}"
-   public_ip_address_allocation = "static"
-   location = "West US"
+  name                         = "acceptanceTestPublicIp1"
+  resource_group_name          = "${azurerm_resource_group.terraform-ansible.name}"
+  public_ip_address_allocation = "static"
+  location                     = "West US"
 }
 
 resource "azurerm_network_security_group" "terraform-nsg2" {
-    name = "acceptanceTestSecurityGroup1"
-    location = "West US"
-    resource_group_name = "${azurerm_resource_group.terraform-ansible.name}"
+  name                = "acceptanceTestSecurityGroup1"
+  location            = "West US"
+  resource_group_name = "${azurerm_resource_group.terraform-ansible.name}"
 
-    security_rule {
-        name = "test123"
-        priority = 100
-        direction = "Inbound"
-        access = "Allow"
-        protocol = "Tcp"
-        source_port_range = "*"
-        destination_port_range = "*"
-        source_address_prefix = "*"
-        destination_address_prefix = "*"
-    }
+  security_rule {
+    name                       = "test123"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 
-    tags {
-        environment = "Production"
-    }
+  tags {
+    environment = "Production"
+  }
 }
-
 
 resource "azurerm_network_interface" "terraform-network_interface" {
   name                = "terraform-nic"
@@ -65,7 +63,7 @@ resource "azurerm_network_interface" "terraform-network_interface" {
     name                          = "testconfiguration1"
     subnet_id                     = "${azurerm_subnet.terraform-subnet.id}"
     private_ip_address_allocation = "dynamic"
-    public_ip_address_id  = "${azurerm_public_ip.terraform-pip2.id}"
+    public_ip_address_id          = "${azurerm_public_ip.terraform-pip2.id}"
   }
 }
 
@@ -81,13 +79,13 @@ resource "azurerm_storage_account" "terraform-storage" {
 }
 
 resource "azurerm_availability_set" "terraform-availability-set" {
-    name = "AvailabilitySet1"
-    location = "West US"
-    resource_group_name = "${azurerm_resource_group.terraform-ansible.name}"
+  name                = "AvailabilitySet1"
+  location            = "West US"
+  resource_group_name = "${azurerm_resource_group.terraform-ansible.name}"
 
-    tags {
-        environment = "Production"
-    }
+  tags {
+    environment = "Production"
+  }
 }
 
 resource "azurerm_storage_container" "terraform-container" {
@@ -103,7 +101,7 @@ resource "azurerm_virtual_machine" "terraform-vm" {
   resource_group_name   = "${azurerm_resource_group.terraform-ansible.name}"
   network_interface_ids = ["${azurerm_network_interface.terraform-network_interface.id}"]
   vm_size               = "Standard_A0"
-  availability_set_id = "${azurerm_availability_set.terraform-availability-set.id}"
+  availability_set_id   = "${azurerm_availability_set.terraform-availability-set.id}"
 
   storage_image_reference {
     publisher = "Canonical"
@@ -141,5 +139,3 @@ resource "azurerm_virtual_machine" "terraform-vm" {
     environment = "Production"
   }
 }
-
-

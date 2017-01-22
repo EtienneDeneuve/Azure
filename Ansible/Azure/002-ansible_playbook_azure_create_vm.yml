@@ -1,9 +1,10 @@
 ---
 - name: Provision instances
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   gather_facts: True
   tasks:
+
   # D'abord on crée un Ressources Group'
   - name: Create Ansible Resourcegroup instances
     azure_rm_resourcegroup:
@@ -11,18 +12,21 @@
       force: true
       state: present
       location: westus
+
   # Ensuite on crée un compte de stockage
   - name: Create Ansible Storage Account instances
     azure_rm_storageaccount:
       resource_group: Ansible_RG
-      name: ansiblesto01
+      name: ansiblesto02
       account_type: Standard_LRS
+
   # En suite on crée le Vnet
   - name: Create Ansible Virtual Network instances ...
     azure_rm_virtualnetwork:
       resource_group: Ansible_RG
       name: ansible_vnet_01
       address_prefixes: "10.10.0.0/16"
+
   # En suite on crée les subnets
   - name: Create Ansible Subnet instances ...
     azure_rm_subnet:
@@ -30,12 +34,15 @@
       name: ansible_subnet_01
       address_prefix: "10.10.0.0/24"
       virtual_network: ansible_vnet_01
+
   # En suite on provisionne un ip Public
   - name: Create Public IP 01
     azure_rm_publicipaddress:
       resource_group: Ansible_RG
-      allocation_method: Static 
+      allocation_method: Static
+      domain_name_label: ansiblevm01
       name: ansible_pip_01
+
   # Creation d'un NSG pour le SSH
   - name: Create NSG with SSH Enabled
     azure_rm_securitygroup:
@@ -48,6 +55,7 @@
           access: Allow
           priority: 101
           direction: Inbound
+
   # Utilisation des objets deja creer pour cree une NIC
   - name: Create NIC with other Parameters (PIP,VNET,SUBNET...)...
     azure_rm_networkinterface:
@@ -57,15 +65,16 @@
       subnet: ansible_subnet_01
       public_ip_name: ansible_pip_01
       security_group: ansible_nsc_01
+
   # Et on cree la VM
   - name: Launch instances
     azure_rm_virtualmachine:
       resource_group: Ansible_RG
-      name: ansible_vm_01
+      name: ansiblevm01
       vm_size: Standard_A0
       os_type: Linux
-      storage_account: ansiblesto01
-      storage_container: ansible_vm_01
+      storage_account: ansiblesto02
+      storage_container: ansiblevm01
       storage_blob: os-vm-01.vhd
       admin_username: testadmin
       admin_password: Password1234!
@@ -75,9 +84,68 @@
         publisher: Canonical
         sku: '16.04-LTS'
         version: latest
-  - name: Get facts for one Public IP
-    azure_rm_publicip_facts:
-      resource_group: Ansible_RG
-      name: ansible_pip_01
-  - debug: msg="{{ ansible_pip_01 }} has powerstate"      
-...
+
+  # On ajoute la VM dans le hosts de Ansible      
+  - name: Add new vm in host file
+    blockinfile:
+      dest: /etc/ansible/hosts
+      block: |
+        [Azure]
+        ansiblevm01.westus.cloudapp.azure.com
+    become: true
+
+  # On le configure 
+- name: Configure instances
+  hosts: azure
+  tasks:
+  # On installe nginx
+  - name: Installs nginx web server
+    apt: pkg=nginx state=installed update_cache=true
+    notify:
+      - start nginx
+    become: true
+
+  # on modifie le fichier index.html (remplace en fait)
+  - name: Add a new index file
+    get_url:
+      url: https://raw.githubusercontent.com/EtienneDeneuve/Azure/test/Ansible/Linux/Nginx/test.html
+      dest: /var/www/html/index.html
+      mode: 0644
+    become: true
+    # notification de Nginx par les handlers pour un reload du daemon ngi
+    notify:
+      - reload nginx
+  
+  # les handlers pour nginx  
+  handlers:
+
+  - name: start nginx
+    service: name=nginx state=started
+    become: true
+
+  - name: reload nginx
+    service: name=nginx state=restarted
+
+# 
+- name: Ajout de la nouvelle regles de securite dans le NSG
+  hosts: localhost
+  connection: local
+  gather_facts: True
+
+  tasks:
+
+  # Petite mise a jour du fichier 
+  - name: Add new rule in NSG
+    azure_rm_securitygroup:
+      resource_group: Ansible_RG # Name of the resource group the security group belongs to.
+      purge_rules: false
+      purge_default_rules: false
+      state: present
+      name: ansible_nsc_01
+      rules:
+        - name: HTTP
+          protocol: Tcp
+          destination_port_range: 80
+          access: Allow
+          priority: 102
+          direction: Inbound
