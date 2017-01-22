@@ -1,0 +1,78 @@
+---
+- name: Provision instances
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: True
+  tasks:
+  # D'abord on crée un Ressources Group'
+  - name: Create Ansible Resourcegroup instances
+    azure_rm_resourcegroup:
+      name: Ansible-RG
+      force: true
+      state: present
+      location: westus
+  # Ensuite on crée un compte de stockage
+  - name: Create Ansible Storage Account instances
+    azure_rm_storageaccount:
+      resource_group: Ansible-RG
+      name: ansiblesto01
+      account_type: Standard_LRS
+  # En suite on crée le Vnet
+  - name: Create Ansible Virtual Network instances ...
+    azure_rm_virtualnetwork:
+      resource_group: Ansible-RG
+      name: ansible-vnet-01
+      address_prefixes: "10.10.0.0/16"
+  # En suite on crée les subnets
+  - name: Create Ansible Subnet instances ...
+    azure_rm_subnet:
+      resource_group: Ansible-RG
+      name: ansible-subnet-01
+      address_prefix: "10.10.0.0/24"
+      virtual_network: ansible-vnet-01
+  # En suite on provisionne un ip Public
+  - name: Create Public IP 01
+    azure_rm_publicipaddress:
+      resource_group: Ansible-RG
+      allocation_method: Static 
+      name: ansible-pip-01
+  # Creation d'un NSG pour le SSH
+  - name: Create NSG with SSH Enabled
+    azure_rm_securitygroup:
+      resource_group: Ansible-RG
+      name: ansible-nsc-01
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 101
+          direction: Inbound
+  # Utilisation des objets deja creer pour cree une NIC
+  - name: Create NIC with other Parameters (PIP,VNET,SUBNET...)...
+    azure_rm_networkinterface:
+      resource_group: Ansible-RG
+      name: ansible-nic-01
+      virtual_network: ansible-vnet-01
+      subnet: ansible-subnet-01
+      public_ip_name: ansible-pip-01
+      security_group: ansible-nsc-01
+  # Et on creer la VM
+  - name: Launch instances
+    azure_rm_virtualmachine:
+      resource_group: Ansible-RG
+      name: ansible-vm-01
+      vm_size: Standard_A0
+      os_type: Linux
+      storage_account: ansiblesto01
+      storage_container: ansible-vm-01
+      storage_blob: os-vm-01.vhd
+      admin_username: testadmin
+      admin_password: Password1234!
+      network_interfaces: ansible-nic-01
+      image:
+        offer: CentOS
+        publisher: OpenLogic
+        sku: '7.1'
+        version: latest
+...
