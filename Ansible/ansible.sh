@@ -19,32 +19,33 @@ done
     ANSIBLE_CONFIG_FILE=/etc/ansible/ansible.cfg
     ANSIBLE_MODULE_DIR=/opt/azure
     ANSIBLE_USER_CRED_FILE=/root/.azure/credentials
-    DEBIAN_FRONTEND=noninteractive
+    export TERM=linux
+    export DEBIAN_FRONTEND=noninteractive
 # installation de ansible et modules pip 
     echo "#################### Update packages list ####################"
-     apt-get -y -q update 
+    apt-get -y -q update 
     echo "#################### Install of software-properties-common ####################"
-     apt-get -y -q install software-properties-common 
+    apt-get -y -q install software-properties-common 
     echo "#################### Install of libffi libffi-dev ####################"
-     apt-get -y -q install libffi libffi-dev
+    apt-get -y -q install libffi-dev
     echo "#################### Install of libssl-dev ####################"
-     apt-get -y -q install libssl-dev 
+    apt-get -y -q install libssl-dev 
     echo "#################### Adding Ansible Repo ####################"
     #-y for assume yes and -u for update just after add
     apt-add-repository ppa:ansible/ansible -y -u 
     echo "#################### apt-get update ####################"
-     apt-get -y -q update
+    apt-get -y -q update
     echo "#################### Install of ansible ####################"
-     apt-get -y -q install ansible
+    apt-get -y -q install ansible
     # install sshpass
     echo "#################### Install of sshpass ####################"
-     apt-get -y -q install sshpass
+    apt-get -y -q install sshpass
     # install Git
     echo "#################### Install of git ####################"
-     apt-get -y -q  install git
+    apt-get -y -q  install git
     # install python
     echo "#################### Install of python-pip ####################"
-     apt-get -y -q install python-pip
+    apt-get -y -q install python-pip
     echo "#################### upgrade pip over pip ####################"
     pip install --upgrade pip 
     echo "#################### Upgrade via pip of urllib3 ####################"
@@ -95,6 +96,9 @@ echo '- name: Test the inventory script
   tasks:
     - debug: msg="{{ inventory_hostname }} has powerstate {{ powerstate }}"
 ' >  ${ANSIBLE_MODULE_DIR}/playbook/test.yml
+
+unset DEBIAN_FRONTEND
+unset TERM
 
 echo "#################### Launching the Ansible Inventory... ####################"
 ansible-playbook -i ${ANSIBLE_MODULE_DIR}/inventory/azure_rm.py  ${ANSIBLE_MODULE_DIR}/playbook/test.yml 
