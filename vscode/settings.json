@@ -1,0 +1,31 @@
+{
+    "[json]": {
+        "editor.insertSpaces": true
+    },
+    "[powershell]": {
+        "editor.insertSpaces": false
+    },
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2
+    },
+    "editor.tabCompletion": true,
+    "editor.rulers": [
+        100,
+        120
+    ],
+    "editor.minimap.enabled": true,
+    "editor.minimap.renderCharacters": true,
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 125,
+    "editor.wrappingIndent": "indent",
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.mouseWheelZoom": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.renderIndentGuides": true,
+    "editor.renderControlCharacters": true,
+    "editor.detectIndentation": true,
+    "workbench.statusBar.visible": true
+}
