@@ -1,6 +1,6 @@
 {
     "Subnet as vNet Child": {
-        "prefix": "arm-child-sn",
+        "prefix": "arm-ed-child-sn",
         "body": [
             "            {",
             "                \"name\": \"{$1:Subnet-Name}\",",
@@ -12,7 +12,7 @@
         "description": "Add a child subnet in Vnet "
     },
     "vNet as Output Reference": {
-        "prefix": "arm-vnetid-output",
+        "prefix": "arm-ed-vnetid-output",
         "body": [
         "    \"${2:vnet2}-ID\": {",
         "       \"type\": \"object\",",
@@ -22,7 +22,7 @@
         "description": "This snippet is used with vNet Peering snippet"
     },
     "Virtual Network Peering": {
-        "prefix": "arm-vn-peering",
+        "prefix": "arm-ed-vn-peering",
         "body": [
             "{",
 			"	\"type\": \"Microsoft.Network/virtualNetworks/virtualNetworkPeerings\",",
@@ -48,7 +48,7 @@
         "description": "Create a vnet peering"
     },
     "Minimal Windows Virtual Machine": {
-        "prefix": "arm-vm-windows-mini",
+        "prefix": "arm-ed-vm-windows-mini",
         "body": [
             "{",
             "    \"type\": \"Microsoft.Storage/storageAccounts\",",
@@ -112,7 +112,7 @@
         "description": "Minimal Windows Virtual Machine"
     },
     "Linux Virtual Machine Minimal": {
-        "prefix": "arm-vm-Linux-mini",
+        "prefix": "arm-ed-vm-Linux-mini",
         "body": [
             "{",
             "    \"type\": \"Microsoft.Storage/storageAccounts\",",
