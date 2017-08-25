@@ -14,14 +14,14 @@ foreach ($vnet in $vnets) {
 
 <#
     .SYNOPSIS
-        Get the all the network resources in the provided subnet
+        Gets the all the network resources in the provided subnet
     .DESCRIPTION
         
     .EXAMPLE
         PS C:\> Get-SubnetDetails -vnet $vnet -subnet $vnet.Subnets -nics $nics
         
     .NOTES
-        This commandlet have been created for a cool customer by Etienne Deneuve from Cellenza
+        This commandlet has been created for a cool customer by Etienne Deneuve from Cellenza
     #>
 function Get-SubnetDetails {
     [cmdletbinding()]
