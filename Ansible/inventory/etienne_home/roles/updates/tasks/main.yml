@@ -1,0 +1,9 @@
+- name: added in 2.4, previously you used 'include'
+  import_tasks: Linux.yml
+  when: ansible_os_family|lower == 'linux'
+- import_tasks: Windows.yml
+  when: ansible_os_family|lower == 'windows'
+- import_tasks: Mac.yml
+  when: ansible_os_family|lower == 'darwin'
+
+  

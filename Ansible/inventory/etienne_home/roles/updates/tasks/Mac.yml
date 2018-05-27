@@ -1,0 +1,24 @@
+---
+- name: Determine softwareupdate action
+  set_fact:
+    osx_update_action: "--install"
+  when: osx_update_install
+
+- name: Determine softwareupdate action
+  set_fact:
+    osx_update_action: "--download"
+  when: osx_update_install
+
+- name: Determine softwareupdate updates
+  set_fact:
+    osx_update_updates: "--recommended"
+  when: osx_update_recommended_only
+
+- name: Determine softwareupdate updates
+  set_fact:
+    osx_update_updates: "--all"
+  when: not osx_update_recommended_only
+
+- name: Run softwareupdate command
+  command: "{{ 'softwareupdate ' + osx_update_action + ' ' + osx_update_updates }}"
+  when: osx_update_install or osx_update_download

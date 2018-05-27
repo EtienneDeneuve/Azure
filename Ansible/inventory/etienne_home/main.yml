@@ -1,0 +1,17 @@
+---
+- hosts: All
+  roles:
+    - updates
+  tasks:
+  # - name: Ping Microtik
+  #   ping:
+  #   with_inventory_hostnames: 
+  #     - Microtik
+  # - name: Ping Linux
+  #   ping:
+  #   with_inventory_hostnames:
+  #     - Linux
+  # - name: Ping Windows
+  #   win_ping:
+  #   with_inventory_hostnames: 
+  #     - Windows

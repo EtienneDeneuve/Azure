@@ -1,0 +1,29 @@
+All:
+  children:
+    Mikrotik:
+      hosts:
+        router-main:
+          ansible_host: 192.168.1.1
+        router-wifi-01:
+          ansible_host: 192.168.1.207
+    Windows:
+      hosts:
+        win-hyper-v:
+          ansible_host: 192.168.1.5
+        win-constellation:
+          ansible_host: 192.168.1.205
+        win-srv-ad:
+          ansible_host: 192.168.1.9
+    Linux:
+      hosts:
+        lin-jeedom:
+          ansible_host: 192.168.1.203
+    Mac:
+      hosts:
+        localhost:
+          ansible_connection: local 
+          ansible_host: 127.0.0.1
+    Azure:
+      hosts:
+        blog: 
+          ansible_host: etienne.deneuve.xyz
