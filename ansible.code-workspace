@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "/Users/etienne/.ansible/roles/mikrotik-ansible.mikrotik-firewall"
 		}
 	],
 	"settings": {}

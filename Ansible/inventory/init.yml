@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  connection: local
+  gather_facts: True
   tasks:
     - name: Install needed pip depencies
       pip:
@@ -9,37 +11,60 @@
         - { name: 'azure', version: '3.0.0' }
         - { name: 'ansible[azure]', version: '2.5.3' }
       become: True
+  - name: set ansible root folder
+    set_fact:
+      project: project_name
+  - name: Create 1st level of folders
+    file:
+      state: directory
+      recurse: yes
+      path: "{{ playbook_dir }}/{{ project }}/{{ item }}"
+    with_items:
+      - [ 'library', 'module_utils', 'filter_plugins', 'roles', 'group_vars', 'host_vars' ] 
 
-    - name: Create folders
-      file:
-        state: directory
-        recurse: yes
-        path: "{{ playbook_dir }}/inventory"
+  - name: Create 2nd level and more folders
+    file:
+      state: directory
+      recurse: yes
+      path: "{{ playbook_dir }}/{{ project }}/roles/{{ item[0] }}/{{ item[1] }}"
+    with_nested:
+      - [ 'common', 'web', 'updates']
+      - [ 'tasks', 'handlers', 'templates', 'files', 'vars', 'defaults', 'meta', 'library', 'module_utils', 'lookup_plugins' ]
 
-    - name: Download azure inventory modules
-      get_url:
-        url: "https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/{{ item }}"
-        dest: "{{ playbook_dir }}/inventory/{{ item }}"
-      loop:
-        - azure_rm.py
-        - azure_rm.ini
-    
-    - name: Set excutable on azure_rm.py
-      file:
-        dest: "{{ playbook_dir }}/inventory/azure_rm.py"
-        mode: "+x"
+  - name: Create defaults files
+    file:
+      state: touch
+      path: "{{ playbook_dir }}/{{ project }}/roles/{{ item[0] }}/{{ item[1] }}/{{ item[2] }}"
+    with_nested:
+      - [ 'common', 'web', 'updates']
+      - [ 'tasks', 'handlers', 'vars', 'defaults', 'meta']
+      - [ 'main.yml', 'Windows.yml', 'Linux.yml', 'Mac.yml']
 
-    - name: Create group vars folder
-      file:
-        state: directory
-        recurse: yes
-        path: "{{ playbook_dir }}/inventory/group_vars"
-    
-    - name: Create required Group_vars
-      set_fact:
-        ansible_user: edeneuve
-        
-    - name: Test if inventory is ok
-      command:  python {{ playbook_dir }}/inventory/azure_rm.py
-      register: test
+  - name: Download Azure inventory modules
+    get_url:
+      url: "https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/{{ item.name }}"
+      dest: "{{ playbook_dir }}/{{ project }}/{{ item.dest }}"
+    loop:
+      - { name: 'azure_rm.py', dest: 'production' } 
+      - { name: 'azure_rm.ini', dest: 'production.ini' }
+      - { name: 'azure_rm.py', dest: 'stagging' } 
+      - { name: 'azure_rm.ini', dest: 'stagging.ini' }    
+
+  - name: Set excutable on azure_rm.py
+    file:
+      dest: "{{ playbook_dir }}/{{ project }}/{{ item }}"
+      mode: "+x"
+    loop:
+      - production
+      - stagging
+
+  - name: Create playbooks 
+    file:
+      path: "{{ playbook_dir }}/{{ project }}/{{ item }}"
+      state: touch
+    with_items:
+      - [ 'main.yml']
+
+
+
     
