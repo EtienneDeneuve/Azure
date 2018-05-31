@@ -1,6 +1,33 @@
 {
+"workbench.iconTheme": "vscode-icons",
+    "guides.enabled": false,
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true,
+        "suppressWelcomeNotice": true
+    },
+    "window.zoomLevel": 0,
+    "cSpell.language": "fr-FR,fr,en-GB,en",
+    "git.autofetch": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "gitlens.historyExplorer.enabled": true,
+    "gitlens.keymap": "alternate",
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "sync.gist": "",
+    "sync.host": "",
+    "sync.pathPrefix": "",
+    "sync.quietSync": true,
+    "sync.askGistName": false,
+    "sync.removeExtensions": false,
+    "sync.syncExtensions": true,
+    "sync.autoDownload": true,
+    "sync.autoUpload": true,
+    "sync.lastUpload": "2018-05-31T05:15:02.905Z",
+    "sync.lastDownload": "",
+    "sync.forceDownload": false,
     "[json]": {
-        "editor.insertSpaces": true
+        "editor.insertSpaces": true,
+
     },
     "[powershell]": {
         "editor.insertSpaces": false
@@ -27,5 +54,16 @@
     "editor.renderIndentGuides": true,
     "editor.renderControlCharacters": true,
     "editor.detectIndentation": true,
-    "workbench.statusBar.visible": true
+    "workbench.statusBar.visible": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true,
+    },
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.overviewRulerBorder": true,
+    "workbench.editor.closeOnFileDelete": false,
+    "window.openFilesInNewWindow": "on",
+    "window.restoreWindows": "folders",
+    "files.autoGuessEncoding": true,
+    "files.autoSave": "afterDelay",
+
 }
